@@ -11,9 +11,11 @@ const App: React.FC = () => {
   const [cats, setCats] = useState<Cat[]>([]);
   const [catName, setCatName] = useState<string>('');
 
+  const baseURL = "http://localhost:5001"
+
   const fetchCats = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/cats');
+      const response = await axios.get(`${baseURL}/cats`);
       setCats(response.data);
     } catch (error) {
       console.error(error);
@@ -23,7 +25,7 @@ const App: React.FC = () => {
   const addCat = async () => {
     if (!catName.trim()) return;
     try {
-      const response = await axios.post('http://localhost:5001/cats', { name: catName });
+      const response = await axios.post(`${baseURL}/cats`, { name: catName });
       setCats([...cats, response.data]);
       setCatName('');
     } catch (error) {
@@ -33,7 +35,7 @@ const App: React.FC = () => {
 
   const deleteCat = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5001/cats/${id}`);
+      await axios.delete(`${baseURL}/cats/${id}`);
       setCats(cats.filter(cat => cat._id !== id));
     } catch (error) {
       console.error(error);
