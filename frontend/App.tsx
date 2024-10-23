@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TextInput, Button, Alert, Platform } from 'react-native';
 import axios from 'axios';
+
 
 interface Cat {
   _id: string;
@@ -11,7 +12,7 @@ const App: React.FC = () => {
   const [cats, setCats] = useState<Cat[]>([]);
   const [catName, setCatName] = useState<string>('');
 
-  const baseURL = "http://localhost:5001"
+  const baseURL = Platform.OS === "ios" ? "http://localhost:5002" : "http://10.0.2.2:5002"
 
   const fetchCats = async () => {
     try {
